@@ -24,7 +24,7 @@ RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd sockets
 RUN pecl install xdebug && docker-php-ext-enable xdebug
 
 
-ADD .docker/xdebug/docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/
+ADD ./xdebug/docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/
 RUN echo "include_path=/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini" >> /usr/local/etc/php/php.ini
 
 # Get latest Composer

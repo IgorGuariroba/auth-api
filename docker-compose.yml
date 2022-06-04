@@ -4,10 +4,11 @@ services:
     micro_auth:
         build:
             args:
-                user: carlos
+                user: user
                 uid: 1000
             context: ./
             dockerfile: Dockerfile
+        container_name: micro_auth
         image: laravel-app
         restart: unless-stopped
         working_dir: /var/www/
@@ -18,9 +19,14 @@ services:
             - queue_auth
         networks:
             - microauth
+        environment:
+            - PHP_IDE_CONFIG=serverName=XdebugServer
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
 
     # nginx
     nginx_auth:
+        container_name: nginx_auth
         image: nginx:alpine
         restart: unless-stopped
         ports:
@@ -33,6 +39,7 @@ services:
 
     # mysql micro 01
     mysql_auth:
+        container_name: mysql_auth
         image: mysql:5.7.22
         restart: unless-stopped
         environment:
@@ -47,9 +54,10 @@ services:
 
     # queue micro 01
     queue_auth:
+        container_name: queue_auth
         build:
             args:
-                user: carlos
+                user: use
                 uid: 1000
             context: ./
             dockerfile: Dockerfile
@@ -64,6 +72,7 @@ services:
 
     #redis
     redis_auth:
+        container_name: redis_auth
         image: redis:latest
         networks:
             - microauth
